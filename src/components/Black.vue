@@ -9,6 +9,7 @@
     </div>
     <div class="timePercent">
       <h1>{{ percent }}</h1>
+      <h1>{{ `兔年剩餘：${yearPercent}%` }}</h1>
     </div>
   </div>
 </template>
@@ -17,8 +18,9 @@
 import { ref, onMounted, computed, watch } from 'vue'
 // import dateUtil from '../utils/dateUtil'
 let offworkTime = ref({})
-let percent = ref('')
-let widthPercent = ref('')
+let percent = ref('') // 今日剩餘
+let yearPercent = ref('') // 今年剩餘
+let widthPercent = ref('') // 倒计时占比宽度
 
 const lastTime = computed(() => {
   return `${offworkTime.value.hour}時${offworkTime.value.min}分鐘${offworkTime.value.ss}秒${offworkTime.value.ms}毫秒`
@@ -33,6 +35,7 @@ onMounted(() => {
     offworkTime.value = getOffWorkTime()
     percent.value = `今日剩餘：${Math.floor(getPercent() * 10000) / 100}%`
     widthPercent.value = `${Math.floor(getPercent() * 10000) / 100}%`
+    yearPercent.value = Math.floor(getYearPercent() * 10000000) / 100000
   })
 })
 
@@ -71,7 +74,7 @@ function getMsLast(template = '2000/1/1 18:00:00') {
 }
 
 /**
- * 返回三位的x（补0）
+ * 返回三位数的x（开头补0）
  * @x {Number}
  */
 function toPatch3(x) {
@@ -92,6 +95,18 @@ function getPercent(totalHour = 9) {
   const percent = msLast / totalMs
   return percent
 }
+
+/**
+ * 返回今年度过的百分比
+ * 农历的起止时间是2023年01月22日-2024年02月09日共有384天
+ */
+function getYearPercent() {
+  const targeTime = new Date('2024/2/9 18:00:00').getTime()
+  const msLast = targeTime - new Date().getTime()
+  const totalMs = 3600000 * 24 * 384
+  const percent = msLast / totalMs
+  return percent
+}
 </script>
 
 <style scoped lang="scss">
@@ -104,10 +119,10 @@ function getPercent(totalHour = 9) {
   justify-content: space-between;
   color: #fff;
   font-weight: bolder;
+  padding-left: calc(100vw / 80);
   .timeLast {
     position: relative;
     text-align: left;
-    margin-left: calc(100vw / 80);
     h1 {
       font-size: calc(100vw / 8);
       margin: 0;
@@ -124,7 +139,7 @@ function getPercent(totalHour = 9) {
     h2:before {
       position: absolute;
       left: 0px;
-      color: #ff0000;
+      color: #ffd32a;
       display: block;
       width: var(--width);
       height: calc(100vw / 8);
@@ -136,10 +151,11 @@ function getPercent(totalHour = 9) {
   }
   .timePercent {
     text-align: left;
+    margin-bottom: calc(100vw / 80);
     h1 {
       margin: 0;
       font-weight: bolder;
-      font-size: calc(100vw / 12);
+      font-size: calc(100vw / 14);
     }
   }
 }

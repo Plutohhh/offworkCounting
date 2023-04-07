@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import subview from './subview'
+// import subview from './subview'
 
 defineProps({
   msg: String,

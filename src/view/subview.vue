@@ -1,5 +1,5 @@
 <template>
-  <!-- <el-input v-model="str"></el-input> -->
+  <el-input v-model="str"></el-input>
 </template>
 
 <script setup>
