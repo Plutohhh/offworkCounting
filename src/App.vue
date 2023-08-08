@@ -1,9 +1,9 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
 import offwork from './components/offwork.vue'
 import Black from './components/Black.vue'
-import temp from './components/temp.vue'
 import Father from './view/Father.vue'
+import PromiseTest from './view/PromiseTest.vue'
+import Test from './view/Test.vue'
 </script>
 
 <template>
@@ -16,6 +16,12 @@ import Father from './view/Father.vue'
     </el-tabs> -->
     <el-carousel direction="vertical" :autoplay="false">
       <el-carousel-item>
+        <PromiseTest />
+      </el-carousel-item>
+      <el-carousel-item>
+        <Test />
+      </el-carousel-item>
+      <el-carousel-item>
         <Black />
       </el-carousel-item>
       <el-carousel-item>
@@ -23,9 +29,6 @@ import Father from './view/Father.vue'
       </el-carousel-item>
       <el-carousel-item>
         <offwork />
-      </el-carousel-item>
-      <el-carousel-item>
-        <temp />
       </el-carousel-item>
     </el-carousel>
   </div>

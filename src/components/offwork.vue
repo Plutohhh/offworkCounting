@@ -146,7 +146,7 @@ function toDecimal3(x) {
   while (s.length <= rs + 3) {
     s += '0'
   }
-  return s
+  return Number(s)
 }
 
 /**
